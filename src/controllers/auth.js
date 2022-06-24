@@ -31,7 +31,8 @@ authRouter.post("/register", async (req, res) => {
 		await User.create(user);
 		res.status(201).json({ message: "User register with success!" });
 	} catch (error) {
-		res.status(500).json({ erro: error });
+		const errorMessage = isEmpty(error) ? "Internal server error." : error;
+		res.status(500).json({ erro: errorMessage });
 	}
 });
 
@@ -62,7 +63,8 @@ authRouter.post("/login", async (req, res) => {
 
 		res.status(200).send({ access_token: token });
 	} catch (error) {
-		res.status(500).json({ erro: error });
+		const errorMessage = isEmpty(error) ? "Internal server error." : error;
+		res.status(500).json({ erro: errorMessage });
 	}
 });
 

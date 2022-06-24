@@ -16,7 +16,8 @@ quoteRouter.post("/quote", async (req, res) => {
 		await Quote.create({ author, en });
 		res.status(201).json({ message: "Quote register with success!" });
 	} catch (error) {
-		res.status(500).json({ erro: error });
+		const errorMessage = isEmpty(error) ? "Internal server error." : error;
+		res.status(500).json({ erro: errorMessage });
 	}
 });
 
@@ -25,7 +26,8 @@ quoteRouter.get("/quotes", async (req, res) => {
 		const quotes = await Quote.find();
 		res.status(201).json(quotes);
 	} catch (error) {
-		res.status(500).json({ erro: error });
+		const errorMessage = isEmpty(error) ? "Internal server error." : error;
+		res.status(500).json({ erro: errorMessage });
 	}
 });
 
@@ -42,7 +44,8 @@ quoteRouter.get("/quote/:id", async (req, res) => {
 
 		res.status(200).json(quote);
 	} catch (error) {
-		res.status(500).json({ erro: error });
+		const errorMessage = isEmpty(error) ? "Internal server error." : error;
+		res.status(500).json({ erro: errorMessage });
 	}
 });
 
@@ -60,7 +63,8 @@ quoteRouter.get("/quotes/random", async (req, res) => {
 
 		res.status(200).json(randomQuote);
 	} catch (error) {
-		res.status(500).json({ erro: error });
+		const errorMessage = isEmpty(error) ? "Internal server error." : error;
+		res.status(500).json({ erro: errorMessage });
 	}
 });
 

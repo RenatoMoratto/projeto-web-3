@@ -6,7 +6,8 @@ userRouter.get("/users", async (req, res) => {
 		const users = await User.find();
 		res.status(201).json(users);
 	} catch (error) {
-		res.status(500).json({ erro: error });
+		const errorMessage = isEmpty(error) ? "Internal server error." : error;
+		res.status(500).json({ erro: errorMessage });
 	}
 });
 
@@ -23,7 +24,8 @@ userRouter.get("/user/:id", async (req, res) => {
 
 		res.status(200).json(user);
 	} catch (error) {
-		res.status(500).json({ erro: error });
+		const errorMessage = isEmpty(error) ? "Internal server error." : error;
+		res.status(500).json({ erro: errorMessage });
 	}
 });
 
