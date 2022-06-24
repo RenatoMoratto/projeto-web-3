@@ -1,4 +1,4 @@
-const isEmpty = value => {
+export const isEmpty = value => {
 	if (typeof value === "string") {
 		return value.trim().length === 0;
 	}
@@ -7,5 +7,3 @@ const isEmpty = value => {
 	}
 	return true;
 };
-
-module.exports = { isEmpty };

@@ -1,8 +1,7 @@
-const quoteRouter = require("express").Router();
-const { isEmpty } = require("../utils/documentoUtils");
-const Quote = require("../models/Quote");
+import { isEmpty } from "../utils/documentoUtils.js";
+import Quote from "../models/Quote.js";
 
-quoteRouter.post("/quote", async (req, res) => {
+export const postQuote = async (req, res) => {
 	const { author, en } = req.body;
 
 	if (isEmpty(author)) {
@@ -19,9 +18,9 @@ quoteRouter.post("/quote", async (req, res) => {
 		const errorMessage = isEmpty(error) ? "Internal server error." : error;
 		res.status(500).json({ erro: errorMessage });
 	}
-});
+};
 
-quoteRouter.get("/quotes", async (req, res) => {
+export const findAllQuotes = async (req, res) => {
 	try {
 		const quotes = await Quote.find();
 		res.status(201).json(quotes);
@@ -29,9 +28,9 @@ quoteRouter.get("/quotes", async (req, res) => {
 		const errorMessage = isEmpty(error) ? "Internal server error." : error;
 		res.status(500).json({ erro: errorMessage });
 	}
-});
+};
 
-quoteRouter.get("/quote/:id", async (req, res) => {
+export const findQuoteById = async (req, res) => {
 	const id = req.params.id;
 
 	try {
@@ -47,9 +46,9 @@ quoteRouter.get("/quote/:id", async (req, res) => {
 		const errorMessage = isEmpty(error) ? "Internal server error." : error;
 		res.status(500).json({ erro: errorMessage });
 	}
-});
+};
 
-quoteRouter.get("/quotes/random", async (req, res) => {
+export const findRandomQuote = async (req, res) => {
 	try {
 		const quotes = await Quote.find();
 
@@ -66,6 +65,4 @@ quoteRouter.get("/quotes/random", async (req, res) => {
 		const errorMessage = isEmpty(error) ? "Internal server error." : error;
 		res.status(500).json({ erro: errorMessage });
 	}
-});
-
-module.exports = quoteRouter;
+};
