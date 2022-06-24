@@ -1,13 +1,14 @@
 const quoteRouter = require("express").Router();
+const { isEmpty } = require("../utils/utils");
 const Quote = require("../models/Quote");
 
 quoteRouter.post("/quote", async (req, res) => {
 	const { author, en } = req.body;
 
-	if (!author) {
+	if (isEmpty(author)) {
 		return res.status(422).send({ message: "Author is required!" });
 	}
-	if (!en) {
+	if (isEmpty(en)) {
 		return res.status(422).send({ message: "Quote is required!" });
 	}
 

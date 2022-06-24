@@ -1,9 +1,20 @@
 const authRouter = require("express").Router();
 const bcrypt = require("bcrypt");
+const { isEmpty } = require("../utils/utils");
 const User = require("../models/User");
 
 authRouter.post("/register", async (req, res) => {
 	const { name, email, password } = req.body;
+
+	if (isEmpty(name)) {
+		return res.status(422).send({ message: "Name is required!" });
+	}
+	if (isEmpty(email)) {
+		return res.status(422).send({ message: "Email is required!" });
+	}
+	if (isEmpty(password)) {
+		return res.status(422).send({ message: "Password is required!" });
+	}
 
 	const hashPassword = await bcrypt.hash(password, 10);
 	const user = { name, email, password: hashPassword };
