@@ -1,7 +1,7 @@
 import express from "express";
 import { postUser, authenticateUser, findAllUsers, findUserById } from "./controllers/user.js";
 import { postQuote, findAllQuotes, findQuoteById, findRandomQuote } from "./controllers/quote.js";
-import { verifyToken } from "./utils/documentoUtils.js";
+import { verifyToken } from "./middlewares/authenticate";
 
 const router = express.Router();
 
