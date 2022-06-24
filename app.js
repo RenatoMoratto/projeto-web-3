@@ -1,10 +1,13 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const { db_connection_string, port } = require("./src/environment_vars");
+const router = require("./src/controllers/index");
 
 const app = express();
 
 app.use(express.json());
+
+app.use("/", router);
 
 mongoose
 	.connect(db_connection_string)
