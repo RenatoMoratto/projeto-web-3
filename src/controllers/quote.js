@@ -1,5 +1,5 @@
 const quoteRouter = require("express").Router();
-const { isEmpty } = require("../utils/utils");
+const { isEmpty } = require("../utils/documentoUtils");
 const Quote = require("../models/Quote");
 
 quoteRouter.post("/quote", async (req, res) => {
