@@ -4,10 +4,15 @@ const Quote = require("../models/Quote");
 quoteRouter.post("/quote", async (req, res) => {
 	const { author, en } = req.body;
 
-	const quote = { author, en };
+	if (!author) {
+		return res.status(422).send({ message: "Author is required!" });
+	}
+	if (!en) {
+		return res.status(422).send({ message: "Quote is required!" });
+	}
 
 	try {
-		await Quote.create(quote);
+		await Quote.create({ author, en });
 		res.status(201).json({ message: "Quote register with success!" });
 	} catch (error) {
 		res.status(500).json({ erro: error });
