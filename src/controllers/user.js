@@ -1,20 +1,5 @@
 const userRouter = require("express").Router();
-const bcrypt = require("bcrypt");
 const User = require("../models/User");
-
-userRouter.post("/user", async (req, res) => {
-	const { name, email, password } = req.body;
-
-		const encriptedPassword = await bcrypt.hash(password);
-		const user = { name, email, password: encriptedPassword };
-
-	try {
-		await User.create(user);
-		res.status(201).json({ message: "User register with success!" });
-	} catch (error) {
-		res.status(500).json({ erro: error });
-	}
-});
 
 userRouter.get("/users", async (req, res) => {
 	try {
