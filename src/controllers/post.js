@@ -1,6 +1,7 @@
 import Post from "../models/Post.js";
 import { isEmpty } from "../utils/documentoUtils.js";
 import { port } from "../environment_vars.js";
+import { uploadFolder } from "../middlewares/uploadImage.js";
 
 export const postPost = async (req, res) => {
 	const { title, text, user } = req.body;
@@ -21,7 +22,7 @@ export const postPost = async (req, res) => {
 	if (file) {
 		post.fileoriginalname = file.originalname;
 		post.filename = file.filename;
-		post.filepath = `http://localhost:${port}/uploads/${file.filename}`;
+		post.filepath = `${uploadFolder}/${file.filename}`;
 	}
 
 	try {
