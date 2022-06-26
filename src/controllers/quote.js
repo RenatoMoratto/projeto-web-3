@@ -16,7 +16,7 @@ export const postQuote = async (req, res) => {
 		res.status(201).json({ message: "Quote register with success!" });
 	} catch (error) {
 		const errorMessage = isEmpty(error) ? "Internal server error." : error;
-		res.status(500).json({ erro: errorMessage });
+		res.status(500).json({ message: errorMessage });
 	}
 };
 
@@ -26,7 +26,7 @@ export const findAllQuotes = async (req, res) => {
 		res.status(201).json(quotes);
 	} catch (error) {
 		const errorMessage = isEmpty(error) ? "Internal server error." : error;
-		res.status(500).json({ erro: errorMessage });
+		res.status(500).json({ message: errorMessage });
 	}
 };
 
@@ -44,7 +44,7 @@ export const findQuoteById = async (req, res) => {
 		res.status(200).json(quote);
 	} catch (error) {
 		const errorMessage = isEmpty(error) ? "Internal server error." : error;
-		res.status(500).json({ erro: errorMessage });
+		res.status(500).json({ message: errorMessage });
 	}
 };
 
@@ -63,6 +63,6 @@ export const findRandomQuote = async (req, res) => {
 		res.status(200).json(randomQuote);
 	} catch (error) {
 		const errorMessage = isEmpty(error) ? "Internal server error." : error;
-		res.status(500).json({ erro: errorMessage });
+		res.status(500).json({ message: errorMessage });
 	}
 };

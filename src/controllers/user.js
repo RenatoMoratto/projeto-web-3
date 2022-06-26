@@ -31,7 +31,7 @@ export const postUser = async (req, res) => {
 		res.status(201).json({ message: "User register with success!" });
 	} catch (error) {
 		const errorMessage = isEmpty(error) ? "Internal server error." : error;
-		res.status(500).json({ erro: errorMessage });
+		res.status(500).json({ message: errorMessage });
 	}
 };
 
@@ -49,13 +49,13 @@ export const authenticateUser = async (req, res) => {
 		const user = await User.findOne({ email: email });
 
 		if (!user) {
-			return res.status(404).send("User not found!");
+			return res.status(404).send({ message: "User not found!" });
 		}
 
 		const validatePassword = await bcrypt.compare(password, user.password);
 
 		if (!validatePassword) {
-			return res.status(401).send("Incorrect password!");
+			return res.status(401).send({ message: "Incorrect password!" });
 		}
 
 		const token = await jwt.sign({ id: user._id }, jwt_secret);
@@ -73,7 +73,7 @@ export const findAllUsers = async (req, res) => {
 		res.status(201).json(users);
 	} catch (error) {
 		const errorMessage = isEmpty(error) ? "Internal server error." : error;
-		res.status(500).json({ erro: errorMessage });
+		res.status(500).json({ message: errorMessage });
 	}
 };
 

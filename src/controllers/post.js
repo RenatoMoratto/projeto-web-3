@@ -25,7 +25,7 @@ export const postPost = async (req, res) => {
 		res.status(201).json({ message: "Post created with success!" });
 	} catch (error) {
 		const errorMessage = isEmpty(error) ? "Internal server error." : error;
-		res.status(500).json({ erro: errorMessage });
+		res.status(500).json({ message: errorMessage });
 	}
 };
 
@@ -35,7 +35,7 @@ export const findAllPosts = async (req, res) => {
 		res.status(201).json(posts);
 	} catch (error) {
 		const errorMessage = isEmpty(error) ? "Internal server error." : error;
-		res.status(500).json({ erro: errorMessage });
+		res.status(500).json({ message: errorMessage });
 	}
 };
 
@@ -53,6 +53,6 @@ export const findPostById = async (req, res) => {
 		res.status(200).json(post);
 	} catch (error) {
 		const errorMessage = isEmpty(error) ? "Internal server error." : error;
-		res.status(500).json({ erro: errorMessage });
+		res.status(500).json({ message: errorMessage });
 	}
 };
