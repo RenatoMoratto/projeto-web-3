@@ -33,7 +33,7 @@ export const findAllQuotes = async (req, res) => {
 
 		if (count) {
 			const countQuotes = [];
-			for (let i = 0; i < count; i++) {
+			for (let i = 0; i < count && i < quotes.length; i++) {
 				countQuotes.push(quotes[i]);
 			}
 			return res.status(200).json(countQuotes);
