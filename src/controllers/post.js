@@ -32,7 +32,13 @@ export const postPost = async (req, res) => {
 export const findAllPosts = async (req, res) => {
 	try {
 		const posts = await Post.find();
-		res.status(201).json(posts);
+
+		if (!posts) {
+			res.state(422).json({ message: "Posts not found!" });
+			return;
+		}
+
+		res.status(200).json(posts);
 	} catch (error) {
 		const errorMessage = isEmpty(error) ? "Internal server error." : error;
 		res.status(500).json({ message: errorMessage });
