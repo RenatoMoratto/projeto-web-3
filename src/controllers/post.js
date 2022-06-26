@@ -34,8 +34,14 @@ export const postPost = async (req, res) => {
 };
 
 export const findAllPosts = async (req, res) => {
+	const { title } = req.query;
+	let posts;
 	try {
-		const posts = await Post.find();
+		if (title) {
+			posts = await Post.find({ title });
+		} else {
+			posts = await Post.find();
+		}
 
 		if (!posts) {
 			res.state(422).json({ message: "Posts not found!" });
@@ -43,24 +49,6 @@ export const findAllPosts = async (req, res) => {
 		}
 
 		res.status(200).json(posts);
-	} catch (error) {
-		const errorMessage = isEmpty(error) ? "Internal server error." : error;
-		res.status(500).json({ message: errorMessage });
-	}
-};
-
-export const findPostById = async (req, res) => {
-	const id = req.params.id;
-
-	try {
-		const post = await Post.findOne({ _id: id });
-
-		if (!post) {
-			res.state(422).json({ message: "Post not found!" });
-			return;
-		}
-
-		res.status(200).json(post);
 	} catch (error) {
 		const errorMessage = isEmpty(error) ? "Internal server error." : error;
 		res.status(500).json({ message: errorMessage });

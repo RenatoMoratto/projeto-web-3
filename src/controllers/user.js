@@ -67,10 +67,15 @@ export const authenticateUser = async (req, res) => {
 	}
 };
 
-export const findAllUsers = async (req, res) => {
+export const findUserByEmail = async (req, res) => {
 	try {
-		const users = await User.find();
-		res.status(201).json(users);
+		const user = await User.findOne({ email: req.query.email });
+
+		if (!user) {
+			return res.status(404).send({ message: "User not found!" });
+		}
+
+		res.status(200).json({ name: user.name, id: user.id, email: user.email });
 	} catch (error) {
 		const errorMessage = isEmpty(error) ? "Internal server error." : error;
 		res.status(500).json({ message: errorMessage });
@@ -81,7 +86,7 @@ export const findUserById = async (req, res) => {
 	const id = req.params.id;
 
 	try {
-		const user = await User.findOne({ _id: id });
+		const user = await User.findById(id);
 
 		if (!user) {
 			res.state(422).json({ message: "User not found!" });
