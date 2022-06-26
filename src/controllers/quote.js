@@ -21,27 +21,25 @@ export const postQuote = async (req, res) => {
 };
 
 export const findAllQuotes = async (req, res) => {
+	const { count } = req.query;
+
 	try {
 		const quotes = await Quote.find();
-		res.status(201).json(quotes);
-	} catch (error) {
-		const errorMessage = isEmpty(error) ? "Internal server error." : error;
-		res.status(500).json({ message: errorMessage });
-	}
-};
 
-export const findQuoteById = async (req, res) => {
-	const id = req.params.id;
-
-	try {
-		const quote = await Quote.findOne({ _id: id });
-
-		if (!quote) {
-			res.state(422).json({ message: "Quote not found!" });
+		if (!quotes) {
+			res.state(422).json({ message: "Quotes not found!" });
 			return;
 		}
 
-		res.status(200).json(quote);
+		if (count) {
+			const countQuotes = [];
+			for (let i = 0; i < count; i++) {
+				countQuotes.push(quotes[i]);
+			}
+			return res.status(200).json(countQuotes);
+		}
+
+		res.status(200).json(quotes);
 	} catch (error) {
 		const errorMessage = isEmpty(error) ? "Internal server error." : error;
 		res.status(500).json({ message: errorMessage });
@@ -60,7 +58,7 @@ export const findRandomQuote = async (req, res) => {
 			return;
 		}
 
-		res.status(200).json(randomQuote);
+		res.status(200).json([randomQuote]);
 	} catch (error) {
 		const errorMessage = isEmpty(error) ? "Internal server error." : error;
 		res.status(500).json({ message: errorMessage });
