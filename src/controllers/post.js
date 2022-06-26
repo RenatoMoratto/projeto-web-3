@@ -1,5 +1,6 @@
 import Post from "../models/Post.js";
 import { isEmpty } from "../utils/documentoUtils.js";
+import { port } from "../environment_vars.js";
 
 export const postPost = async (req, res) => {
 	const { title, text, user } = req.body;
@@ -14,12 +15,15 @@ export const postPost = async (req, res) => {
 	if (isEmpty(text) && isEmpty(file)) {
 		return res.status(422).send({ message: "Some content is required!" });
 	}
+
 	const post = { title, text, user };
+
 	if (file) {
 		post.fileoriginalname = file.originalname;
 		post.filename = file.filename;
-		post.filepath = file.destination;
+		post.filepath = `http://localhost:${port}/uploads/${file.filename}`;
 	}
+
 	try {
 		await Post.create(post);
 		res.status(201).json({ message: "Post created with success!" });

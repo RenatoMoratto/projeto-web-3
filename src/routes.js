@@ -3,7 +3,7 @@ import { postUser, authenticateUser, findAllUsers, findUserById } from "./contro
 import { postQuote, findAllQuotes, findRandomQuote } from "./controllers/quote.js";
 import { postPost, findAllPosts, findPostById } from "./controllers/post.js";
 import { verifyToken } from "./middlewares/authenticate.js";
-import { upload } from "./middlewares/uploadImage.js";
+import { upload, uploadFolder } from "./middlewares/uploadImage.js";
 
 const router = express.Router();
 
@@ -18,7 +18,8 @@ router.post("/quote", verifyToken, postQuote);
 router.get("/quotes", findAllQuotes);
 router.get("/quotes/random", findRandomQuote);
 
-// Quotes Endpoints
+// Posts Endpoints
+router.use("/uploads", express.static(uploadFolder));
 router.post("/post", verifyToken, upload.single("file"), postPost);
 router.get("/posts", findAllPosts);
 router.get("/post/:id", findPostById);
