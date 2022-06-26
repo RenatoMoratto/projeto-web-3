@@ -55,7 +55,7 @@ export const authenticateUser = async (req, res) => {
 		const validatePassword = await bcrypt.compare(password, user.password);
 
 		if (!validatePassword) {
-			return res.status(401).send("Email and/or password are incorrect!");
+			return res.status(401).send("Incorrect password!");
 		}
 
 		const token = await jwt.sign({ id: user._id }, jwt_secret);
