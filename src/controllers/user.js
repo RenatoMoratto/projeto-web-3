@@ -21,7 +21,7 @@ export const postUser = async (req, res) => {
 		const userExists = await User.findOne({ email: email });
 
 		if (userExists) {
-			return res.status(400).send("Email already in use!");
+			return res.status(400).send({ message: "Email already in use!" });
 		}
 
 		const hashPassword = await bcrypt.hash(password, 10);
@@ -63,7 +63,7 @@ export const authenticateUser = async (req, res) => {
 		res.status(200).send({ access_token: token });
 	} catch (error) {
 		const errorMessage = isEmpty(error) ? "Internal server error." : error;
-		res.status(500).json({ erro: errorMessage });
+		res.status(500).json({ message: errorMessage });
 	}
 };
 

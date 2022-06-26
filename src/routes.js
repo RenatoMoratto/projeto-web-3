@@ -8,7 +8,7 @@ import { upload } from "./middlewares/uploadImage.js";
 const router = express.Router();
 
 // User Endpoints
-router.post("/register", verifyToken, postUser);
+router.post("/register", postUser);
 router.post("/login", authenticateUser);
 router.get("/users", verifyToken, findAllUsers);
 router.get("/user/:id", verifyToken, findUserById);
