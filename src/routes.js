@@ -1,7 +1,7 @@
 import express from "express";
 import { postUser, authenticateUser, findUserByEmail, findUserById } from "./controllers/user.js";
 import { postQuote, findAllQuotes, findRandomQuote } from "./controllers/quote.js";
-import { postPost, findAllPosts } from "./controllers/post.js";
+import { postPost, findAllPosts, findPostsByTitle } from "./controllers/post.js";
 import { verifyToken } from "./middlewares/authenticate.js";
 import { upload, uploadFolder } from "./middlewares/uploadImage.js";
 
@@ -22,5 +22,6 @@ router.get("/quotes/random", verifyToken, findRandomQuote);
 router.use("/uploads", express.static(uploadFolder));
 router.post("/post", verifyToken, upload.single("file"), postPost);
 router.get("/posts", verifyToken, findAllPosts);
+router.get("/postsByTitle", verifyToken, findPostsByTitle);
 
 export default router;

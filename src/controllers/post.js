@@ -1,6 +1,5 @@
 import Post from "../models/Post.js";
-import { isEmpty } from "../utils/documentoUtils.js";
-import { port } from "../environment_vars.js";
+import { isEmpty, diacriticSensitiveRegex } from "../utils/documentoUtils.js";
 import { uploadFolder } from "../middlewares/uploadImage.js";
 
 export const postPost = async (req, res) => {
@@ -34,15 +33,27 @@ export const postPost = async (req, res) => {
 	}
 };
 
-export const findAllPosts = async (req, res) => {
+export const findPostsByTitle = async (req, res) => {
 	const { title } = req.query;
-	let posts;
+
 	try {
-		if (title) {
-			posts = await Post.find({ title });
-		} else {
-			posts = await Post.find();
+		const posts = await Post.find({ title: RegExp(diacriticSensitiveRegex(title), "i") }).populate("user", "name");
+
+		if (!posts) {
+			res.state(422).json({ message: "Posts not found!" });
+			return;
 		}
+
+		res.status(200).json(posts);
+	} catch (error) {
+		const errorMessage = isEmpty(error) ? "Internal server error." : error;
+		res.status(500).json({ message: errorMessage });
+	}
+};
+
+export const findAllPosts = async (req, res) => {
+	try {
+		const posts = await Post.find().populate("user", "name");
 
 		if (!posts) {
 			res.state(422).json({ message: "Posts not found!" });
